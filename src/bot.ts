@@ -3,6 +3,7 @@ import { BOT_API_KEY } from "./config/token.js"
 import { START_MESSAGE, ERROR_MESSAGE } from "./config/messages.js"
 import { createTables } from "./storage/sqlite.js"
 import { registerUser } from "./handlers/register-user.js"
+import { logger } from "./logger/logger.js"
 
 createTables()
 
@@ -17,6 +18,8 @@ bot.command("start", async (ctx) => {
   }
 
   registerUser(id as number, name)
+
+  logger.info("user registred", ctx.message?.from)
 
   await ctx.reply(START_MESSAGE)
 })
